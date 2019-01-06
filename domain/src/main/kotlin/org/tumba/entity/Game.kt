@@ -3,14 +3,14 @@ package org.tumba.entity
 class Game(
     val players: List<Player>,
     val map: Map,
-    val wagonPlacements: MutableList<WagonsPlacement>,
+    val wagonPlacements: MutableList<TrainCarPlacement>,
     val currentPlayer: Player = players.firstOrNull() ?: throw IllegalArgumentException("No one player"),
     val playerStates: PlayerStates = PlayerStates.createInitialStates(players.size),
     val wagonCardStore: WagonCardStore,
-    val wagonPlacementValidator: IWagonPlacementValidator
+    val trainCarPlacementValidator: ITrainCarPlacementValidator
 ) {
 
-    fun placeWagons(
+    fun placeTrainCar(
         playerId: Int,
         roadId: Int,
         wagonCardIds: List<Int>
@@ -20,21 +20,21 @@ class Game(
             ?: throw IllegalArgumentException("Unknown road, id = $roadId")
 
         player.checkOutOfTurn()
-        player.checkEnoughWagons(road)
-        val wagonCards = player.getWagonCards(wagonCardIds)
+        player.checkEnoughTrainCarsFor(road)
+        val wagonCards = player.getTrainCarCards(wagonCardIds)
 
-        if (wagonPlacementValidator.canRoadBePlacedByWagonCards(road, wagonCards)) {
-            placeWagonSafely(player, road, wagonCards)
+        if (trainCarPlacementValidator.canRoadBePlacedByTrainCarCards(road, wagonCards)) {
+            placeTrainCarSafely(player, road, wagonCards)
         } else {
-            throw IllegalWagonTypeException()
+            throw IllegalTrainCarTypeException()
         }
     }
 
-    private fun placeWagonSafely(player: Player, road: Road, wagonCards: List<WagonCard>) {
+    private fun placeTrainCarSafely(player: Player, road: Road, trainCarCards: List<TrainCarCard>) {
         val playerState = playerStates.getStateOf(player)
-        playerState.wagonCards.removeAll(wagonCards)
-        playerState.numberOfWagons -= road.length
-        wagonPlacements.add(WagonsPlacement(road, Wagon(player.id)))
+        playerState.trainCarCards.removeAll(trainCarCards)
+        playerState.numberOfTrainCards -= road.length
+        wagonPlacements.add(TrainCarPlacement(road, TrainCar(player.id)))
     }
 
     private fun getPlayerById(id: Int) =
@@ -44,25 +44,25 @@ class Game(
         if (this != currentPlayer) throw OutOfTurnException()
     }
 
-    private fun Player.getWagonCards(wagonCardIds: List<Int>): List<WagonCard> {
-        val wagonCards = playerStates.getStateOf(this).wagonCards
+    private fun Player.getTrainCarCards(wagonCardIds: List<Int>): List<TrainCarCard> {
+        val wagonCards = playerStates.getStateOf(this).trainCarCards
         return wagonCardIds
             .map { id -> wagonCards.firstOrNull { it.id == id }
-                ?: throw WagonCardNotOwnedByUserException("Player $this not own cards $wagonCardIds") }
+                ?: throw TrainCarCardNotOwnedByUserException("Player $this not own cards $wagonCardIds") }
     }
 
-    private fun Player.checkEnoughWagons(road: Road) {
-        val numberOfPlayerWagons = playerStates.getStateOf(this).numberOfWagons
+    private fun Player.checkEnoughTrainCarsFor(road: Road) {
+        val numberOfPlayerWagons = playerStates.getStateOf(this).numberOfTrainCards
         if (road.length > numberOfPlayerWagons) {
-            throw NotEnoughWagonsException()
+            throw NotEnoughTrainCarsException()
         }
     }
 }
 
 class PlayerState(
-    var numberOfWagons: Int,
-    var travelCards: MutableList<TravelCard>,
-    var wagonCards: MutableList<WagonCard>,
+    var numberOfTrainCards: Int,
+    var destinationTickerCards: MutableList<DestinationTickerCard>,
+    var trainCarCards: MutableList<TrainCarCard>,
     var points: Int
 )
 
@@ -78,10 +78,10 @@ class PlayerStates(private val states: List<PlayerState>) {
             return PlayerStates(
                 states = (0..numberOfPlayers).map {
                     PlayerState(
-                        numberOfWagons = 40,
+                        numberOfTrainCards = 40,
                         points = 0,
-                        travelCards = mutableListOf(),
-                        wagonCards = mutableListOf()
+                        destinationTickerCards = mutableListOf(),
+                        trainCarCards = mutableListOf()
                     )
                 }
             )
@@ -89,12 +89,4 @@ class PlayerStates(private val states: List<PlayerState>) {
     }
 }
 
-class PlayerWagons(
-    private val wagons: List<Int>
-) {
-
-    fun getNumberOfWagon(playerId: Int) =
-        wagons.getOrNull(playerId) ?: throw IllegalArgumentException("Unknown player id = $playerId")
-}
-
-class WagonsPlacement(val road: Road, wagon: Wagon)
+class TrainCarPlacement(val road: Road, trainCar: TrainCar)

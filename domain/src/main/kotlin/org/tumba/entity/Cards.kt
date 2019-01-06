@@ -1,6 +1,6 @@
 package org.tumba.entity
 
-class TravelCard(
+class DestinationTickerCard(
     val id: Int,
     val from: City,
     val to: City
@@ -9,7 +9,7 @@ class TravelCard(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as TravelCard
+        other as DestinationTickerCard
 
         if (id != other.id) return false
 
@@ -21,7 +21,7 @@ class TravelCard(
     }
 }
 
-class WagonCard(
+class TrainCarCard(
     val id: Int,
     val kind: Kind
 ) {
@@ -33,7 +33,8 @@ class WagonCard(
         PINK,
         WHITE,
         GREEN,
-        MULTICOLOR
+        ORANGE,
+        LOCOMOTIVE
     }
 }
 

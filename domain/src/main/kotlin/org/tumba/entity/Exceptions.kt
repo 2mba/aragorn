@@ -4,10 +4,10 @@ abstract class GameException(message: String = "") : RuntimeException(message)
 
 class OutOfTurnException : GameException()
 
-abstract class WagonCannotBePlacedException(message: String = ""): GameException(message)
+abstract class TrainCarCannotBePlacedException(message: String = ""): GameException(message)
 
-class WagonCardNotOwnedByUserException(message: String = "") : WagonCannotBePlacedException(message)
+class TrainCarCardNotOwnedByUserException(message: String = "") : TrainCarCannotBePlacedException(message)
 
-class IllegalWagonTypeException(message: String = "") : WagonCannotBePlacedException(message)
+class IllegalTrainCarTypeException(message: String = "") : TrainCarCannotBePlacedException(message)
 
-class NotEnoughWagonsException(message: String = "") : WagonCannotBePlacedException(message)
+class NotEnoughTrainCarsException(message: String = "") : TrainCarCannotBePlacedException(message)

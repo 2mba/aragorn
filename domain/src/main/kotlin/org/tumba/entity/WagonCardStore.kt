@@ -3,10 +3,10 @@ package org.tumba.entity
 import java.util.*
 
 class WagonCardStack(
-    cards: List<WagonCard>
+    cards: List<TrainCarCard>
 ) {
 
-    private val stack: Deque<WagonCard> = ArrayDeque<WagonCard>().apply { addAll(cards) }
+    private val stack: Deque<TrainCarCard> = ArrayDeque<TrainCarCard>().apply { addAll(cards) }
 
     val size: Int
         get() = stack.size
@@ -14,22 +14,22 @@ class WagonCardStack(
     val isEmpty: Boolean
         get() = size == 0
 
-    fun pop(): WagonCard? {
+    fun pop(): TrainCarCard? {
         return if (stack.isNotEmpty()) stack.pop() else null
     }
 }
 
 class WagonCardStore(
-    cards: List<WagonCard>,
+    cards: List<TrainCarCard>,
     val maxStoreSize: Int,
     private val stack: WagonCardStack
 ) {
 
     val stackSize: Int
         get() = stack.size
-    val cards: List<WagonCard>
+    val cards: List<TrainCarCard>
         get() = cardsInternal
-    private val cardsInternal: LinkedList<WagonCard> = LinkedList()
+    private val cardsInternal: LinkedList<TrainCarCard> = LinkedList()
 
     init {
         when {
@@ -50,7 +50,7 @@ class WagonCardStore(
         }
     }
 
-    fun getCardFromStore(cardId: Int): WagonCard {
+    fun getCardFromStore(cardId: Int): TrainCarCard {
         val cardIdx = cardsInternal.indexOfFirst { cardId == it.id }
         if (cardIdx < 0) throw IllegalArgumentException("No card in store with id $cardId")
         return cardsInternal[cardIdx].also {
@@ -63,5 +63,5 @@ class WagonCardStore(
         }
     }
 
-    fun getCardFromStack(): WagonCard? = stack.pop()
+    fun getCardFromStack(): TrainCarCard? = stack.pop()
 }

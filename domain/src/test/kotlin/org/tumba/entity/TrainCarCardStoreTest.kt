@@ -5,18 +5,18 @@ import org.junit.Test
 
 import org.tumba.`should contains same`
 
-class WagonCardStoreTest {
+class TrainCarCardStoreTest {
 
     @Suppress("UNUSED_CHANGED_VALUE")
     @Test
     fun testInitWithEmptyCard() {
         var id = 0
         val stackCards = listOf(
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLUE),
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.GREEN),
-            WagonCard(id++, WagonCard.Kind.MULTICOLOR)
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLUE),
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN),
+            TrainCarCard(id++, TrainCarCard.Kind.LOCOMOTIVE)
         )
         val stack = WagonCardStack(stackCards)
         val wagonCardStore = WagonCardStore(emptyList(), STORE_SIZE, stack)
@@ -29,17 +29,17 @@ class WagonCardStoreTest {
     fun testInitWithFullCard() {
         var id = 0
         val stackCards = listOf(
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLACK)
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK)
         )
         val storeCards = listOf(
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.YELLOW),
-            WagonCard(id++, WagonCard.Kind.GREEN),
-            WagonCard(id++, WagonCard.Kind.GREEN)
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.YELLOW),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN)
         )
         val stack = WagonCardStack(stackCards)
         val wagonCardStore = WagonCardStore(storeCards, STORE_SIZE, stack)
@@ -52,13 +52,13 @@ class WagonCardStoreTest {
     fun testGetCardFromStore() {
         var id = 0
         val stackCards = listOf(
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLUE),
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.GREEN),
-            WagonCard(id++, WagonCard.Kind.MULTICOLOR),
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.BLACK)
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLUE),
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN),
+            TrainCarCard(id++, TrainCarCard.Kind.LOCOMOTIVE),
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK)
         )
         val stack = WagonCardStack(stackCards)
         val wagonCardStore = WagonCardStore(emptyList(), STORE_SIZE, stack)
@@ -83,15 +83,15 @@ class WagonCardStoreTest {
     fun testGetCardFromStoreAndStack() {
         var id = 0
         val stackCards = listOf(
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.BLUE),
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.GREEN),
-            WagonCard(id++, WagonCard.Kind.MULTICOLOR),
-            WagonCard(id++, WagonCard.Kind.RED),
-            WagonCard(id++, WagonCard.Kind.BLACK),
-            WagonCard(id++, WagonCard.Kind.GREEN),
-            WagonCard(id++, WagonCard.Kind.YELLOW)
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.BLUE),
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN),
+            TrainCarCard(id++, TrainCarCard.Kind.LOCOMOTIVE),
+            TrainCarCard(id++, TrainCarCard.Kind.RED),
+            TrainCarCard(id++, TrainCarCard.Kind.BLACK),
+            TrainCarCard(id++, TrainCarCard.Kind.GREEN),
+            TrainCarCard(id++, TrainCarCard.Kind.YELLOW)
         )
         val stack = WagonCardStack(stackCards)
         val wagonCardStore = WagonCardStore(emptyList(), STORE_SIZE, stack)

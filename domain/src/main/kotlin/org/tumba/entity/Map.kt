@@ -4,7 +4,7 @@ import kotlin.IllegalArgumentException
 import kotlin.math.min
 
 
-class Wagon(val playerId: Int)
+class TrainCar(val playerId: Int)
 
 class City(
     val id: Int,
