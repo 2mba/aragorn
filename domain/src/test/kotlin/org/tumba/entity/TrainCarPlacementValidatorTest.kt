@@ -16,7 +16,8 @@ class TrainCarPlacementValidatorTest {
             Road.Color.BLACK to TrainCarCard.Kind.BLACK,
             Road.Color.BLUE to TrainCarCard.Kind.BLUE,
             Road.Color.YELLOW to TrainCarCard.Kind.YELLOW,
-            Road.Color.RED to TrainCarCard.Kind.RED
+            Road.Color.RED to TrainCarCard.Kind.RED,
+            Road.Color.ORANGE to TrainCarCard.Kind.ORANGE
         )
         val wagonPlacementValidator = TrainCarPlacementValidator()
         val lengthOfRoad = 5
@@ -44,7 +45,8 @@ class TrainCarPlacementValidatorTest {
             TrainCarCard.Kind.BLACK,
             TrainCarCard.Kind.BLUE,
             TrainCarCard.Kind.YELLOW,
-            TrainCarCard.Kind.RED
+            TrainCarCard.Kind.RED,
+            TrainCarCard.Kind.ORANGE
         )
             .map { Road.Color.GRAY to it }
             .let { pairs -> mapOf(*pairs.toTypedArray()) }

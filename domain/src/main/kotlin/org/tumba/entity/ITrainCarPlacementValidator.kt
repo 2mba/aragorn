@@ -16,6 +16,7 @@ class TrainCarPlacementValidator : ITrainCarPlacementValidator {
             Road.Color.BLACK,
             Road.Color.PINK,
             Road.Color.WHITE,
+            Road.Color.ORANGE,
             Road.Color.GREEN -> {
                 val wagonKind = roadColorToTrainCarCardKindMatching.getValue(road.color)
                 trainCars.replaceLocomotiveCardBy(wagonKind).all { it.kind == wagonKind }
@@ -43,7 +44,8 @@ class TrainCarPlacementValidator : ITrainCarPlacementValidator {
             Road.Color.BLACK to TrainCarCard.Kind.BLACK,
             Road.Color.PINK to TrainCarCard.Kind.PINK,
             Road.Color.WHITE to TrainCarCard.Kind.WHITE,
-            Road.Color.GREEN to TrainCarCard.Kind.GREEN
+            Road.Color.GREEN to TrainCarCard.Kind.GREEN,
+            Road.Color.ORANGE to TrainCarCard.Kind.ORANGE
         )
     }
 }

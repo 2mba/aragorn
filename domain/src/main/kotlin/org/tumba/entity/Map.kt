@@ -64,6 +64,7 @@ class Road(
         PINK,
         WHITE,
         GREEN,
+        ORANGE,
         GRAY
     }
 
