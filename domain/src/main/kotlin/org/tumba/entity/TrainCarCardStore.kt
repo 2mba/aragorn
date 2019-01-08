@@ -2,27 +2,42 @@ package org.tumba.entity
 
 import java.util.*
 
-class WagonCardStack(
-    cards: List<TrainCarCard>
+class CardStack<T : ICard>(
+    cards: List<T>,
+    droppedCards: List<T>,
+    private val random: Random = Random()
 ) {
 
-    private val stack: Deque<TrainCarCard> = ArrayDeque<TrainCarCard>().apply { addAll(cards) }
+    private val stack: Deque<T> = ArrayDeque<T>().apply { addAll(cards) }
+    private val droppedCards: MutableList<T> = mutableListOf<T>().apply { addAll(droppedCards) }
 
     val size: Int
         get() = stack.size
 
     val isEmpty: Boolean
-        get() = size == 0
+        get() = stack.isEmpty()
 
-    fun pop(): TrainCarCard? {
-        return if (stack.isNotEmpty()) stack.pop() else null
+    fun pop(): T? {
+        return if (stack.isNotEmpty()) stack.pop() else throw IllegalStateException("Stack is empty")
+    }
+
+    fun dropCard(card: T) {
+        droppedCards.add(card)
+    }
+
+    fun reset() {
+        if (isEmpty) {
+            stack.addAll(droppedCards.shuffled(random))
+        } else {
+            throw IllegalStateException("Stack card is not empty")
+        }
     }
 }
 
-class WagonCardStore(
+class TrainCarCardStore(
     cards: List<TrainCarCard>,
     val maxStoreSize: Int,
-    private val stack: WagonCardStack
+    private val stack: CardStack<TrainCarCard>
 ) {
 
     val stackSize: Int
@@ -64,4 +79,8 @@ class WagonCardStore(
     }
 
     fun getCardFromStack(): TrainCarCard? = stack.pop()
+
+    fun dropCard(card: TrainCarCard) {
+        stack.dropCard(card)
+    }
 }

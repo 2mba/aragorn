@@ -4,7 +4,7 @@ class DestinationTickerCard(
     val id: Int,
     val from: City,
     val to: City
-) {
+) : ICard {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -24,7 +24,7 @@ class DestinationTickerCard(
 class TrainCarCard(
     val id: Int,
     val kind: Kind
-) {
+) : ICard {
     enum class Kind {
         RED,
         YELLOW,
@@ -37,4 +37,6 @@ class TrainCarCard(
         LOCOMOTIVE
     }
 }
+
+interface ICard
 
