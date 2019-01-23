@@ -30,7 +30,7 @@ class PlaceTrainCardsCommandProcessorTest {
             Player(0, "Player1", Player.Color.BLACK),
             Player(1, "Player2", Player.Color.BLUE)
         )
-        val trainCarCards = mutableListOf(
+        val trainCarCardsOfPlayer1 = mutableListOf(
             TrainCarCard(0, TrainCarCard.Kind.GREEN),
             TrainCarCard(1, TrainCarCard.Kind.GREEN),
             TrainCarCard(2, TrainCarCard.Kind.GREEN),
@@ -40,33 +40,20 @@ class PlaceTrainCardsCommandProcessorTest {
         return GameState(
             players = players,
             map = TestThreeCityMap.map,
-            trainCarPlacements = mutableListOf(
-                TrainCarPlacement(
-                    TestThreeCityMap.road1,
-                    TrainCar(0)
-                )
-            ),
+            trainCarPlacements = mutableListOf(),
             playerStates = PlayerStates(
                 states = listOf(
                     PlayerState( // Player1, id = 0
                         numberOfTrainCars = 40,
                         points = 0,
                         destinationTicketCards = mutableListOf(),
-                        trainCarCards = trainCarCards
+                        trainCarCards = trainCarCardsOfPlayer1
                     ),
-                    PlayerState( // Player2, id = 1
-                        numberOfTrainCars = 0,
-                        points = 0,
-                        destinationTicketCards = mutableListOf(),
-                        trainCarCards = mutableListOf()
-                    )
+                    mockk()
                 )
             ),
             intermediateGameState = IntermediateGameState.PlacingTrainCars(players[0]),
-            cardsHolder = CardsHolder(
-                trainCarCardStore = mockk(),
-                destinationTicketCardsStack = CardStack(listOf(), listOf())
-            )
+            cardsHolder = mockk()
         )
     }
 }
