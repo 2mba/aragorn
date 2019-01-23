@@ -1,4 +1,5 @@
 rootProject.name = 'aragorn'
 include 'presentation'
 include 'data'
+include 'domain'
 

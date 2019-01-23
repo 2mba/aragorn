@@ -18,7 +18,7 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.GREEN),
             TrainCarCard(id++, TrainCarCard.Kind.LOCOMOTIVE)
         )
-        val stack = CardStack(stackCards)
+        val stack = CardStack(stackCards, listOf())
         val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
 
         wagonCardStore.cards `should contains same` stackCards
@@ -41,7 +41,7 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.GREEN),
             TrainCarCard(id++, TrainCarCard.Kind.GREEN)
         )
-        val stack = CardStack(stackCards)
+        val stack = CardStack(stackCards, listOf())
         val wagonCardStore = TrainCarCardStore(storeCards, STORE_SIZE, stack)
 
         wagonCardStore.cards `should contains same` storeCards
@@ -60,7 +60,7 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.RED),
             TrainCarCard(id++, TrainCarCard.Kind.BLACK)
         )
-        val stack = CardStack(stackCards)
+        val stack = CardStack(stackCards, listOf())
         val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
 
         wagonCardStore.cards `should contains same` stackCards.take(STORE_SIZE)
@@ -93,7 +93,7 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.GREEN),
             TrainCarCard(id++, TrainCarCard.Kind.YELLOW)
         )
-        val stack = CardStack(stackCards)
+        val stack = CardStack(stackCards, listOf())
         val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
 
         wagonCardStore.cards `should contains same` stackCards.take(STORE_SIZE)

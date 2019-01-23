@@ -5,16 +5,20 @@ import org.tumba.entity.command.ICommandProcessor
 
 
 class Game(
-    val trainCarPlacementValidator: ITrainCarPlacementValidator,
-    val state: GameState,
+    private val state: GameState,
     private val commandProcessor: ICommandProcessor
 ) {
 
+    private val gameHelper = GameHelper(state)
+
     fun execute(command: ICommand) {
-        commandProcessor.process(this, command)
+        commandProcessor.process(
+            gameData = ICommandProcessor.GameData(state, gameHelper),
+            command = command
+        )
     }
 
-    fun chooseTurnType(playerId: Int, type: TurnType) {
+    /*fun chooseTurnType(playerId: Int, type: TurnType) {
         val player = getPlayerById(playerId)
         ensureState(equalTo(IntermediateGameState.ChoosingTurnType(player)))
 
@@ -29,31 +33,49 @@ class Game(
                 state.intermediateGameState = IntermediateGameState.PickingTrainCarCard(player, 0)
             }
         }
+    }*/
+}
+
+interface IGameHelper {
+
+    fun getPlayerById(id: Int): Player
+
+    fun getTrainCarCards(player: Player, wagonCardIds: List<Int>): List<TrainCarCard>
+
+    fun checkEnoughTrainCarsFor(player: Player, road: Road)
+
+    fun ensureState(predicate: (IntermediateGameState) -> Boolean)
+
+    fun equalTo(stateIntermediate: IntermediateGameState): (IntermediateGameState) -> Boolean
+}
+
+class GameHelper(private val gameState: GameState) : IGameHelper {
+
+    override fun getPlayerById(id: Int): Player {
+        return gameState.players.firstOrNull { it.id == id } ?: throw IllegalArgumentException("Unknown player id $id")
     }
 
-    fun getPlayerById(id: Int): Player {
-        return state.players.firstOrNull { it.id == id } ?: throw IllegalArgumentException("Unknown player id $id")
-    }
-
-    fun getTrainCarCards(player: Player, wagonCardIds: List<Int>): List<TrainCarCard> {
-        val wagonCards = state.playerStates.getStateOf(player).trainCarCards
+    override fun getTrainCarCards(player: Player, wagonCardIds: List<Int>): List<TrainCarCard> {
+        val wagonCards = gameState.playerStates.getStateOf(player).trainCarCards
         return wagonCardIds
-            .map { id -> wagonCards.firstOrNull { it.id == id }
-                ?: throw TrainCarCardNotOwnedByUserException("Player $player not own cards $wagonCardIds") }
+            .map { id ->
+                wagonCards.firstOrNull { it.id == id }
+                    ?: throw TrainCarCardNotOwnedByUserException("Player $player not own cards $wagonCardIds")
+            }
     }
 
-    fun checkEnoughTrainCarsFor(player: Player, road: Road) {
-        val numberOfPlayerWagons = state.playerStates.getStateOf(player).numberOfTrainCards
+    override fun checkEnoughTrainCarsFor(player: Player, road: Road) {
+        val numberOfPlayerWagons = gameState.playerStates.getStateOf(player).numberOfTrainCars
         if (road.length > numberOfPlayerWagons) {
             throw NotEnoughTrainCarsException()
         }
     }
 
-    fun ensureState(predicate: (IntermediateGameState) -> Boolean) {
-        if (!predicate.invoke(state.intermediateGameState)) throw OutOfTurnException()
+    override fun ensureState(predicate: (IntermediateGameState) -> Boolean) {
+        if (!predicate.invoke(gameState.intermediateGameState)) throw OutOfTurnException()
     }
 
-    fun equalTo(stateIntermediate: IntermediateGameState): (IntermediateGameState) -> Boolean {
+    override fun equalTo(stateIntermediate: IntermediateGameState): (IntermediateGameState) -> Boolean {
         return { intermediateGameState: IntermediateGameState -> stateIntermediate == intermediateGameState }
     }
 }
@@ -61,7 +83,7 @@ class Game(
 class GameState(
     val players: List<Player>,
     val map: Map,
-    val wagonPlacements: MutableList<TrainCarPlacement>,
+    val trainCarPlacements: MutableList<TrainCarPlacement>,
     val playerStates: PlayerStates = PlayerStates.createInitialStates(players.size),
     var intermediateGameState: IntermediateGameState,
     var cardsHolder: CardsHolder
@@ -73,7 +95,7 @@ class CardsHolder(
 )
 
 class PlayerState(
-    var numberOfTrainCards: Int,
+    var numberOfTrainCars: Int,
     var destinationTicketCards: MutableList<DestinationTickerCard>,
     var trainCarCards: MutableList<TrainCarCard>,
     var points: Int
@@ -91,7 +113,7 @@ class PlayerStates(private val states: List<PlayerState>) {
             return PlayerStates(
                 states = (0..numberOfPlayers).map {
                     PlayerState(
-                        numberOfTrainCards = 40,
+                        numberOfTrainCars = 40,
                         points = 0,
                         destinationTicketCards = mutableListOf(),
                         trainCarCards = mutableListOf()

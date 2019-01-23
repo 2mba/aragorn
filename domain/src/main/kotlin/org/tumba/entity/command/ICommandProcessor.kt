@@ -5,41 +5,46 @@ import org.tumba.entity.*
 
 interface ICommandProcessor {
 
-    fun process(game: Game, command: ICommand)
+    fun process(gameData: GameData, command: ICommand)
+
+    data class GameData(
+         val gameState: GameState,
+         val gameHelper: GameHelper
+    )
 }
 
 class TypedBatchCommandProcessor(
     private val processors: List<TypedCommandProcessor<*>>
 ) : ICommandProcessor {
 
-    override fun process(game: Game, command: ICommand) {
+    override fun process(gameData: ICommandProcessor.GameData, command: ICommand) {
         processors
             .asSequence()
             .filter { it.clazz == command }
-            .forEach { it.process(game, command) }
+            .forEach { it.process(gameData, command) }
     }
 }
 
 abstract class TypedCommandProcessor<T>(val clazz: Class<T>) : ICommandProcessor {
 
     @Suppress("UNCHECKED_CAST")
-    override fun process(game: Game, command: ICommand) {
+    override fun process(gameData: ICommandProcessor.GameData, command: ICommand) {
         if (command::class.java == clazz) {
-            process(game, command as T)
+            process(gameData, command as T)
         }
     }
 
-    abstract fun process(game: Game, command: T)
+    abstract fun process(gameData: ICommandProcessor.GameData, command: T)
 }
 
 class BatchCommandProcessor(
     private val processors: List<ICommandProcessor>
 ) : ICommandProcessor {
 
-    override fun process(game: Game, command: ICommand) {
+    override fun process(gameData: ICommandProcessor.GameData, command: ICommand) {
         processors.forEach {
             try {
-                it.process(game, command)
+                it.process(gameData, command)
             } catch (err: Throwable) {
                 err.printStackTrace()
             }
@@ -51,31 +56,33 @@ class PlaceTrainCarsCommand(
     val playerId: Int,
     val roadId: Int,
     val wagonCardIds: List<Int>
-)
+): ICommand
 
-class PlaceTrainCarsCommandProcessor: TypedCommandProcessor<PlaceTrainCarsCommand>(PlaceTrainCarsCommand::class.java) {
+class PlaceTrainCarsCommandProcessor(
+    private val trainCarPlacementValidator: ITrainCarPlacementValidator
+): TypedCommandProcessor<PlaceTrainCarsCommand>(PlaceTrainCarsCommand::class.java) {
 
-    override fun process(game: Game, command: PlaceTrainCarsCommand) {
-        val player = game.getPlayerById(command.playerId)
-        val road = game.state.map.cityGraph.roads.firstOrNull { it.id == command.roadId }
+    override fun process(gameData: ICommandProcessor.GameData, command: PlaceTrainCarsCommand) {
+        val player = gameData.gameHelper.getPlayerById(command.playerId)
+        val road = gameData.gameState.map.cityGraph.roads.firstOrNull { it.id == command.roadId }
             ?: throw IllegalArgumentException("Unknown road, id = ${command.roadId}")
 
-        game.ensureState(game.equalTo(IntermediateGameState.PlacingTrainCars(player)))
-        game.checkEnoughTrainCarsFor(player, road)
-        val wagonCards = game.getTrainCarCards(player, command.wagonCardIds)
+        gameData.gameHelper.ensureState(gameData.gameHelper.equalTo(IntermediateGameState.PlacingTrainCars(player)))
+        gameData.gameHelper.checkEnoughTrainCarsFor(player, road)
+        val wagonCards = gameData.gameHelper.getTrainCarCards(player, command.wagonCardIds)
 
-        if (game.trainCarPlacementValidator.canRoadBePlacedByTrainCarCards(road, wagonCards)) {
-            placeTrainCarSafely(game, player, road, wagonCards)
+        if (trainCarPlacementValidator.canRoadBePlacedByTrainCarCards(road, wagonCards)) {
+            placeTrainCarSafely(gameData.gameState, player, road, wagonCards)
         } else {
             throw IllegalTrainCarTypeException()
         }
     }
 
-    private fun placeTrainCarSafely(game: Game, player: Player, road: Road, trainCarCards: List<TrainCarCard>) {
-        val playerState = game.state.playerStates.getStateOf(player)
+    private fun placeTrainCarSafely(state: GameState, player: Player, road: Road, trainCarCards: List<TrainCarCard>) {
+        val playerState = state.playerStates.getStateOf(player)
         playerState.trainCarCards.removeAll(trainCarCards)
-        playerState.numberOfTrainCards -= road.length
-        game.state.wagonPlacements.add(TrainCarPlacement(road, TrainCar(player.id)))
+        playerState.numberOfTrainCars -= road.length
+        state.trainCarPlacements.add(TrainCarPlacement(road, TrainCar(player.id)))
     }
 }
 
