@@ -1,6 +1,7 @@
 package org.tumba.entity
 
 import io.mockk.mockk
+import org.amshove.kluent.mock
 import org.junit.Test
 import org.tumba.TestThreeCityMap
 import org.tumba.entity.command.ICommandProcessor
@@ -97,6 +98,36 @@ class PlaceTrainCardsCommandProcessorTest {
                 )
             ),
             intermediateGameState = IntermediateGameState.PlacingTrainCars(players[1]),
+            cardsHolder = mockk()
+        )
+    }
+
+    @Test(expected = OutOfTurnException::class)
+    fun testUnsuccessfulTrainCarPlacementCausedOutOfTurn() {
+        val gameState = provideGameState3()
+        val commandProcessor = PlaceTrainCarsCommandProcessor(mockk())
+        val command = PlaceTrainCarsCommand(
+            playerId = 1,
+            roadId = 0,
+            wagonCardIds = listOf()
+        )
+        commandProcessor.process(
+            gameData = ICommandProcessor.GameData(gameState, GameHelper(gameState)),
+            command = command
+        )
+    }
+
+    private fun provideGameState3(): GameState {
+        val players = listOf(
+            Player(0, "Player1", Player.Color.BLACK),
+            Player(1, "Player2", Player.Color.BLUE)
+        )
+        return GameState(
+            players = players,
+            map = TestThreeCityMap.map,
+            trainCarPlacements = mutableListOf(),
+            playerStates = mockk(),
+            intermediateGameState = IntermediateGameState.PlacingTrainCars(players[0]),
             cardsHolder = mockk()
         )
     }
