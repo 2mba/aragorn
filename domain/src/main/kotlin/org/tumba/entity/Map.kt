@@ -93,14 +93,14 @@ class RoadBuilder(var id: Int = 0) {
     fun road(
         start: City,
         end: City,
-        numberOfParts: Int,
+        length: Int,
         color: Road.Color
     ): Road {
         return Road(
             id = id,
             start = start,
             end = end,
-            length = numberOfParts,
+            length = length,
             color = color
         ).also {
             id++

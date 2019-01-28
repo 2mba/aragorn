@@ -1,7 +1,6 @@
 package org.tumba.entity
 
 import io.mockk.mockk
-import org.amshove.kluent.mock
 import org.junit.Test
 import org.tumba.TestThreeCityMap
 import org.tumba.entity.command.ICommandProcessor

@@ -5,7 +5,7 @@ import org.tumba.entity.command.ICommandProcessor
 
 
 class Game(
-    private val state: GameState,
+    private var state: GameState,
     private val commandProcessor: ICommandProcessor
 ) {
 
@@ -83,7 +83,7 @@ class GameHelper(private val gameState: GameState) : IGameHelper {
 class GameState(
     val players: List<Player>,
     val map: Map,
-    val trainCarPlacements: MutableList<TrainCarPlacement>,
+    val trainCarPlacements: List<TrainCarPlacement>,
     val playerStates: PlayerStates = PlayerStates.createInitialStates(players.size),
     var intermediateGameState: IntermediateGameState,
     var cardsHolder: CardsHolder
