@@ -38,7 +38,7 @@ class NewGameStateProvider(
             map = mapProvider.provideMapProvider(),
             trainCarPlacements = mutableListOf(),
             playerStates = playerStateProvider.providePlayerStates(),
-            intermediateGameState = IntermediateGameState.Starting(),
+            intermediateGameState = IntermediateGameState.Starting,
             cardsHolder = CardsHolder(
                 trainCarCardStore = TODO(),
                 destinationTicketCardsStack = TODO()

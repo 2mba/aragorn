@@ -19,7 +19,7 @@ class GameExecuteCommandTest {
 
         verify(exactly = 1) {
             commandProcessor.process(
-                gameData = any(), // TODO ICommandProcessor.GameData(any(), any()),
+                gameManager = any(), // TODO ICommandProcessor.GameData(any(), any()),
                 command = command
             )
         }
@@ -40,7 +40,7 @@ class GameExecuteCommandTest {
                     )
                 }
             ),
-            intermediateGameState = IntermediateGameState.Starting(),
+            intermediateGameState = IntermediateGameState.Starting,
             cardsHolder = CardsHolder(
                 trainCarCardStore = mockk(),
                 destinationTicketCardsStack = CardStack(listOf(), listOf())

@@ -1,11 +1,10 @@
-package org.tumba.entity
+package org.tumba.entity.processor
 
 import io.mockk.mockk
 import org.junit.Test
 import org.tumba.TestThreeCityMap
-import org.tumba.entity.command.ICommandProcessor
+import org.tumba.entity.*
 import org.tumba.entity.command.PlaceTrainCarsCommand
-import org.tumba.entity.command.PlaceTrainCarsCommandProcessor
 
 class PlaceTrainCardsCommandProcessorTest {
 
@@ -20,7 +19,7 @@ class PlaceTrainCardsCommandProcessorTest {
             wagonCardIds = listOf(0, 1, 2, 3, 4)
         )
         commandProcessor.process(
-            gameData = ICommandProcessor.GameData(gameState, GameHelper(gameState)),
+            gameManager = GameManager(gameState),
             command = command
         )
     }
@@ -70,7 +69,7 @@ class PlaceTrainCardsCommandProcessorTest {
             wagonCardIds = listOf(0, 1, 2, 3, 4)
         )
         commandProcessor.process(
-            gameData = ICommandProcessor.GameData(gameState, GameHelper(gameState)),
+            gameManager = GameManager(gameState),
             command = command
         )
     }
@@ -80,7 +79,12 @@ class PlaceTrainCardsCommandProcessorTest {
             Player(0, "Player1", Player.Color.BLACK),
             Player(1, "Player2", Player.Color.BLUE)
         )
-        val trainCarCardsOfPlayer1 = (0..4).map { TrainCarCard(it, TrainCarCard.Kind.RED) }.toMutableList()
+        val trainCarCardsOfPlayer1 = (0..4).map {
+            TrainCarCard(
+                it,
+                TrainCarCard.Kind.RED
+            )
+        }.toMutableList()
         return GameState(
             players = players,
             map = TestThreeCityMap.map,
@@ -111,7 +115,7 @@ class PlaceTrainCardsCommandProcessorTest {
             wagonCardIds = listOf()
         )
         commandProcessor.process(
-            gameData = ICommandProcessor.GameData(gameState, GameHelper(gameState)),
+            gameManager = GameManager(gameState),
             command = command
         )
     }
