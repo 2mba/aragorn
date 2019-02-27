@@ -1,6 +1,11 @@
 package org.tumba.entity
 
+import org.tumba.entity.command.BatchCommandProcessor
 import org.tumba.entity.command.ICommandProcessor
+import org.tumba.entity.command.TypedBatchCommandProcessor
+import org.tumba.entity.processor.PlaceTrainCarsCommandProcessor
+import org.tumba.entity.values.IGameConstants
+import org.tumba.entity.values.TicketToRide
 
 
 interface IGameFactory {
@@ -10,14 +15,24 @@ interface IGameFactory {
 
 class NewGameFactory(
     private val newGameStateProvider: NewGameStateProvider,
-    private val commandProcessorProvider: CommandProcessorProvider
+    private val commandProcessorProvider: ICommandProcessorProvider
 ) : IGameFactory {
 
     override fun create(): Game {
         return Game(
             state = newGameStateProvider.provideGameState(),
-            commandProcessor = commandProcessorProvider.provideCommandProcessor()
+            commandProcessor = commandProcessorProvider.provide()
         )
+    }
+
+    companion object {
+
+        fun create(): NewGameFactory {
+            return NewGameFactory(
+                newGameStateProvider = NewGameStateProvider.create(listOf()),
+                commandProcessorProvider = CommandProcessorProvider()
+            )
+        }
     }
 }
 
@@ -29,49 +44,70 @@ interface IGameStateProvider {
 class NewGameStateProvider(
     private val players: List<Player>,
     private val mapProvider: IMapProvider,
-    private val playerStateProvider: IPlayerStatesProvider
+    private val playerStateProvider: IPlayerStatesProvider,
+    private val trainCardsStoreProvider: IProvider<TrainCarCardStore>,
+    private val destinationTicketCardsStackProvider: IProvider<CardStack<DestinationTickerCard>>
 ) : IGameStateProvider {
 
     override fun provideGameState(): GameState {
         return GameState(
             players = players,
-            map = mapProvider.provideMapProvider(),
+            map = mapProvider.provide(),
             trainCarPlacements = mutableListOf(),
-            playerStates = playerStateProvider.providePlayerStates(),
+            playerStates = playerStateProvider.provide(),
             intermediateGameState = IntermediateGameState.Starting,
             cardsHolder = CardsHolder(
-                trainCarCardStore = TODO(),
-                destinationTicketCardsStack = TODO()
+                trainCarCardStore = trainCardsStoreProvider.provide(),
+                destinationTicketCardsStack = destinationTicketCardsStackProvider.provide()
             )
+        )
+    }
+
+    companion object {
+
+        fun create(players: List<Player>): NewGameStateProvider {
+            return NewGameStateProvider(
+                players = players,
+                mapProvider = MapProvider(),
+                playerStateProvider = NewGamePlayerStateProvider(players.size),
+                trainCardsStoreProvider = NewGameTrainCardStoreProvider(TicketToRide),
+                destinationTicketCardsStackProvider = NewGameDestinationTicketCardProvider()
+            )
+        }
+    }
+}
+
+interface ICommandProcessorProvider : IProvider<ICommandProcessor>
+
+class CommandProcessorProvider : ICommandProcessorProvider {
+
+    override fun provide(): ICommandProcessor {
+        val typedBatchCommandProcessor = TypedBatchCommandProcessor(
+            processors = listOf(
+                PlaceTrainCarsCommandProcessor(TrainCarPlacementValidator())
+            )
+        )
+        return BatchCommandProcessor(
+            processors = listOf(typedBatchCommandProcessor)
         )
     }
 }
 
-interface ICommandProcessorProvider {
+interface IPlayerStatesProvider : IProvider<PlayerStates>
 
-    fun provideCommandProcessor() : ICommandProcessor
-}
+interface IMapProvider : IProvider<Map>
 
-class CommandProcessorProvider : ICommandProcessorProvider {
 
-    override fun provideCommandProcessor(): ICommandProcessor {
-        TODO()
+class MapProvider: IMapProvider {
+
+    override fun provide(): Map {
+        return Map(CityGraph(listOf(), listOf()))
     }
-}
-
-interface IPlayerStatesProvider {
-
-    fun providePlayerStates(): PlayerStates
-}
-
-interface IMapProvider {
-
-    fun provideMapProvider(): Map
 }
 
 class NewGamePlayerStateProvider(private val numberOfPlayers: Int) : IPlayerStatesProvider {
 
-    override fun providePlayerStates(): PlayerStates {
+    override fun provide(): PlayerStates {
         return PlayerStates(
             states = (0..numberOfPlayers).map {
                 PlayerState(
@@ -93,14 +129,27 @@ interface IProvider<T> {
 class NewGameDestinationTicketCardProvider : IProvider<CardStack<DestinationTickerCard>> {
 
     override fun provide(): CardStack<DestinationTickerCard> {
-        TODO()
+        return CardStack(
+            cards = listOf(),
+            droppedCards = emptyList()
+        )
     }
 }
 
-class NewGameTrainCardStoreProvider : IProvider<TrainCarCardStore> {
+class NewGameTrainCardStoreProvider(
+    private val gameConstants: IGameConstants
+) : IProvider<TrainCarCardStore> {
 
     override fun provide(): TrainCarCardStore {
-        return TrainCarCardStore(TODO(), TODO(), TODO())
+        val cardStack = CardStack<TrainCarCard>(
+            cards = listOf(),
+            droppedCards = emptyList()
+        )
+        val cards = listOf<TrainCarCard>()
+        return TrainCarCardStore(
+            cards = cards,
+            maxStoreSize = gameConstants.trainCarCardStoreMaxSize,
+            stack = cardStack
+        )
     }
 }
-
