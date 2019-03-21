@@ -1,8 +1,8 @@
-package org.tumba.entity.processor
+package org.tumba.aragorn.entity.processor
 
-import org.tumba.entity.*
-import org.tumba.entity.command.PlaceTrainCarsCommand
-import org.tumba.entity.command.TypedCommandProcessor
+import org.tumba.aragorn.entity.*
+import org.tumba.aragorn.entity.command.PlaceTrainCarsCommand
+import org.tumba.aragorn.entity.command.TypedCommandProcessor
 
 class PlaceTrainCarsCommandProcessor(
     private val trainCarPlacementValidator: ITrainCarPlacementValidator
@@ -28,6 +28,11 @@ class PlaceTrainCarsCommandProcessor(
         val playerState = state.playerStates.getStateOf(player)
         playerState.trainCarCards.removeAll(trainCarCards)
         playerState.numberOfTrainCars -= road.length
-        state.trainCarPlacements.add(TrainCarPlacement(road, TrainCar(player.id)))
+        state.trainCarPlacements.add(
+            TrainCarPlacement(
+                road,
+                TrainCar(player.id)
+            )
+        )
     }
 }

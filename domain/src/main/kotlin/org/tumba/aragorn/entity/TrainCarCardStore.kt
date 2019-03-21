@@ -1,4 +1,4 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 import java.util.*
 

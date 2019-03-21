@@ -1,10 +1,10 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
-import org.tumba.entity.command.ICommand
-import org.tumba.entity.command.ICommandProcessor
+import org.tumba.aragorn.entity.command.ICommand
+import org.tumba.aragorn.entity.command.ICommandProcessor
 
 class GameExecuteCommandTest {
 

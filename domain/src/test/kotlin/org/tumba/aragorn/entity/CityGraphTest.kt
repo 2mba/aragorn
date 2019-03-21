@@ -1,12 +1,9 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 import org.amshove.kluent.`should equal`
-import org.junit.Assert
 import org.junit.Test
-import org.tumba.`should contains same`
-import org.tumba.assertThrown
-import java.lang.IllegalArgumentException
-import java.lang.NullPointerException
+import org.tumba.aragorn.`should contains same`
+import org.tumba.aragorn.assertThrown
 
 class CityGraphTest {
 
@@ -60,13 +57,31 @@ class CityGraphTest {
 
     @Test
     fun testRoadBuilder() {
-        val road1 = Road(3, City(0, ""), City(0, ""), 1, Road.Color.BLACK)
-        val road2 = Road(4, City(0, ""), City(0, ""), 2, Road.Color.BLACK)
+        val road1 = Road(
+            3,
+            City(0, ""),
+            City(0, ""),
+            1,
+            Road.Color.BLACK
+        )
+        val road2 = Road(
+            4,
+            City(0, ""),
+            City(0, ""),
+            2,
+            Road.Color.BLACK
+        )
 
         val roadBuilder = RoadBuilder(3)
 
-        val road1a = roadBuilder.road(City(0, ""), City(0, ""), 1, Road.Color.BLACK)
-        val road2a = roadBuilder.road(City(0, ""), City(0, ""), 2, Road.Color.BLACK)
+        val road1a = roadBuilder.road(
+            City(0, ""),
+            City(0, ""), 1, Road.Color.BLACK
+        )
+        val road2a = roadBuilder.road(
+            City(0, ""),
+            City(0, ""), 2, Road.Color.BLACK
+        )
 
         road1 `should equal` road1a
         road2 `should equal` road2a

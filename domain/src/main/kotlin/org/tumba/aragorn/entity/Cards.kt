@@ -1,4 +1,4 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 class DestinationTickerCard(
     val id: Int,

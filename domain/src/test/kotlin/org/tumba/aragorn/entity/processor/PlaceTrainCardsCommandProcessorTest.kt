@@ -1,17 +1,18 @@
-package org.tumba.entity.processor
+package org.tumba.aragorn.entity.processor
 
 import io.mockk.mockk
 import org.junit.Test
-import org.tumba.TestThreeCityMap
-import org.tumba.entity.*
-import org.tumba.entity.command.PlaceTrainCarsCommand
+import org.tumba.aragorn.TestThreeCityMap
+import org.tumba.aragorn.entity.*
+import org.tumba.aragorn.entity.command.PlaceTrainCarsCommand
 
 class PlaceTrainCardsCommandProcessorTest {
 
     @Test(expected = IllegalTrainCarTypeException::class)
     fun testUnsuccessfulTrainCarPlacementCausedIncorrectCards() {
         val gameState = provideGameState1()
-        val commandProcessor = PlaceTrainCarsCommandProcessor(TrainCarPlacementValidator())
+        val commandProcessor =
+            PlaceTrainCarsCommandProcessor(TrainCarPlacementValidator())
         // Road(0, cityMoscow, citySpb, 5, Road.Color.RED)
         val command = PlaceTrainCarsCommand(
             playerId = 0,
@@ -59,7 +60,8 @@ class PlaceTrainCardsCommandProcessorTest {
     @Test(expected = NotEnoughTrainCarsException::class)
     fun testUnsuccessfulTrainCarPlacementCausedNotEnoughTrainCars() {
         val gameState = provideGameState2()
-        val commandProcessor = PlaceTrainCarsCommandProcessor(TrainCarPlacementValidator())
+        val commandProcessor =
+            PlaceTrainCarsCommandProcessor(TrainCarPlacementValidator())
         // Road(0, cityMoscow, citySpb, 5, Road.Color.RED)
         // Placing to road 0 with 5 length and RED color.
         // Should be not enough train card

@@ -1,6 +1,6 @@
-package org.tumba
+package org.tumba.aragorn
 
-import org.tumba.entity.City
+import org.tumba.aragorn.entity.City
 
 infix fun <T> Iterable<T>.`should contains same`(iterable: Iterable<T>) {
     if (!iterable.all { this.contains(it) }) fail("Difference lists: ${this.joinToString()} and ${iterable.joinToString()}")

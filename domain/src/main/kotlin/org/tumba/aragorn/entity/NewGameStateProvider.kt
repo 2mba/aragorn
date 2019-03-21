@@ -1,11 +1,11 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
-import org.tumba.entity.command.BatchCommandProcessor
-import org.tumba.entity.command.ICommandProcessor
-import org.tumba.entity.command.TypedBatchCommandProcessor
-import org.tumba.entity.processor.PlaceTrainCarsCommandProcessor
-import org.tumba.entity.values.IGameConstants
-import org.tumba.entity.values.TicketToRide
+import org.tumba.aragorn.entity.command.BatchCommandProcessor
+import org.tumba.aragorn.entity.command.ICommandProcessor
+import org.tumba.aragorn.entity.command.TypedBatchCommandProcessor
+import org.tumba.aragorn.entity.processor.PlaceTrainCarsCommandProcessor
+import org.tumba.aragorn.entity.values.IGameConstants
+import org.tumba.aragorn.entity.values.TicketToRide
 
 
 interface IGameFactory {
@@ -77,7 +77,8 @@ class NewGameStateProvider(
     }
 }
 
-interface ICommandProcessorProvider : IProvider<ICommandProcessor>
+interface ICommandProcessorProvider :
+    IProvider<ICommandProcessor>
 
 class CommandProcessorProvider : ICommandProcessorProvider {
 
@@ -126,7 +127,8 @@ interface IProvider<T> {
     fun provide(): T
 }
 
-class NewGameDestinationTicketCardProvider : IProvider<CardStack<DestinationTickerCard>> {
+class NewGameDestinationTicketCardProvider :
+    IProvider<CardStack<DestinationTickerCard>> {
 
     override fun provide(): CardStack<DestinationTickerCard> {
         return CardStack(

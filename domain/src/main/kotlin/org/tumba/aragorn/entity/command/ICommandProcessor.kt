@@ -1,6 +1,6 @@
-package org.tumba.entity.command
+package org.tumba.aragorn.entity.command
 
-import org.tumba.entity.*
+import org.tumba.aragorn.entity.IGameManager
 
 
 interface ICommandProcessor {

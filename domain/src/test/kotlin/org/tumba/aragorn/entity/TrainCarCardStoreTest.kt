@@ -1,9 +1,8 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 import org.amshove.kluent.`should equal`
 import org.junit.Test
-
-import org.tumba.`should contains same`
+import org.tumba.aragorn.`should contains same`
 
 class TrainCarCardStoreTest {
 
@@ -19,7 +18,10 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.LOCOMOTIVE)
         )
         val stack = CardStack(stackCards, listOf())
-        val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
+        val wagonCardStore = TrainCarCardStore(
+            emptyList(),
+            STORE_SIZE, stack
+        )
 
         wagonCardStore.cards `should contains same` stackCards
     }
@@ -42,7 +44,10 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.GREEN)
         )
         val stack = CardStack(stackCards, listOf())
-        val wagonCardStore = TrainCarCardStore(storeCards, STORE_SIZE, stack)
+        val wagonCardStore = TrainCarCardStore(
+            storeCards,
+            STORE_SIZE, stack
+        )
 
         wagonCardStore.cards `should contains same` storeCards
     }
@@ -61,7 +66,10 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.BLACK)
         )
         val stack = CardStack(stackCards, listOf())
-        val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
+        val wagonCardStore = TrainCarCardStore(
+            emptyList(),
+            STORE_SIZE, stack
+        )
 
         wagonCardStore.cards `should contains same` stackCards.take(STORE_SIZE)
 
@@ -94,7 +102,10 @@ class TrainCarCardStoreTest {
             TrainCarCard(id++, TrainCarCard.Kind.YELLOW)
         )
         val stack = CardStack(stackCards, listOf())
-        val wagonCardStore = TrainCarCardStore(emptyList(), STORE_SIZE, stack)
+        val wagonCardStore = TrainCarCardStore(
+            emptyList(),
+            STORE_SIZE, stack
+        )
 
         wagonCardStore.cards `should contains same` stackCards.take(STORE_SIZE)
 

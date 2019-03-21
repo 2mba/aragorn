@@ -1,7 +1,7 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
-import org.tumba.entity.command.ICommand
-import org.tumba.entity.command.ICommandProcessor
+import org.tumba.aragorn.entity.command.ICommand
+import org.tumba.aragorn.entity.command.ICommandProcessor
 
 
 interface IGame {
@@ -41,7 +41,8 @@ class Game(
     }*/
 }
 
-internal class GameManager(override val state: IGameState) : IGameManager {
+internal class GameManager(override val state: IGameState) :
+    IGameManager {
 
     override fun getPlayerById(id: Int): Player {
         return state.players.firstOrNull { it.id == id } ?: throw IllegalArgumentException("Unknown player id $id")

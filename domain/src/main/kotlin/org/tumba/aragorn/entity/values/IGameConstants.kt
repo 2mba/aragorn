@@ -1,4 +1,4 @@
-package org.tumba.entity.values
+package org.tumba.aragorn.entity.values
 
 interface IGameConstants {
 

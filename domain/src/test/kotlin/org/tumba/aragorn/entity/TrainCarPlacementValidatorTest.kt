@@ -1,9 +1,8 @@
-package org.tumba.entity
+package org.tumba.aragorn.entity
 
 import org.amshove.kluent.`should be`
 import org.junit.Test
-
-import org.tumba.anyCity
+import org.tumba.aragorn.anyCity
 
 class TrainCarPlacementValidatorTest {
 
@@ -150,7 +149,12 @@ class TrainCarPlacementValidatorTest {
                 length = 5,
                 color = Road.Color.RED
             ),
-            trainCars = (0 until 10).map { TrainCarCard(it, TrainCarCard.Kind.RED) }
+            trainCars = (0 until 10).map {
+                TrainCarCard(
+                    it,
+                    TrainCarCard.Kind.RED
+                )
+            }
         )
         canBePlaced `should be` false
 
@@ -162,7 +166,12 @@ class TrainCarPlacementValidatorTest {
                 length = 10,
                 color = Road.Color.RED
             ),
-            trainCars = (0 until 3).map { TrainCarCard(it, TrainCarCard.Kind.RED) }
+            trainCars = (0 until 3).map {
+                TrainCarCard(
+                    it,
+                    TrainCarCard.Kind.RED
+                )
+            }
         )
         canBePlaced `should be` false
     }
