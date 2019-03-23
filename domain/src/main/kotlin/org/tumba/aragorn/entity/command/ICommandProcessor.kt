@@ -46,10 +46,3 @@ class BatchCommandProcessor(
         }
     }
 }
-
-class PlaceTrainCarsCommand(
-    val playerId: Int,
-    val roadId: Int,
-    val wagonCardIds: List<Int>
-): ICommand
-

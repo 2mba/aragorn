@@ -141,13 +141,6 @@ class PlayerStates(private val states: List<PlayerState>) {
     }
 }
 
-enum class TurnType {
-    PLACE_TRAIN_CARS,
-    GET_DESTINATION_TICKETS,
-    GET_TRAIN_CAR_CARDS
-}
-
-
 class TrainCarPlacement(val road: Road, val trainCar: TrainCar)
 
 sealed class IntermediateGameState {
@@ -163,4 +156,6 @@ sealed class IntermediateGameState {
     data class PickingDestinationTicketCard(val player: Player, val cards: List<DestinationTickerCard>): IntermediateGameState()
 
     data class PlacingTrainCars(val player: Player): IntermediateGameState()
+
+    companion object
 }
