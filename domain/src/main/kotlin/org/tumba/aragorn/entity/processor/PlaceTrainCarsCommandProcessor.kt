@@ -4,7 +4,7 @@ import org.tumba.aragorn.entity.*
 import org.tumba.aragorn.entity.command.PlaceTrainCarsCommand
 import org.tumba.aragorn.entity.command.TypedCommandProcessor
 
-class PlaceTrainCarsCommandProcessor(
+internal class PlaceTrainCarsCommandProcessor(
     private val trainCarPlacementValidator: ITrainCarPlacementValidator
 ): TypedCommandProcessor<PlaceTrainCarsCommand>(PlaceTrainCarsCommand::class.java) {
 

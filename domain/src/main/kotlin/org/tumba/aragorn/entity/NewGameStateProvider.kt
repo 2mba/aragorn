@@ -8,12 +8,12 @@ import org.tumba.aragorn.entity.values.IGameConstants
 import org.tumba.aragorn.entity.values.TicketToRide
 
 
-interface IGameFactory {
+internal interface IGameFactory {
 
     fun create(): Game
 }
 
-class NewGameFactory(
+internal class NewGameFactory(
     private val newGameStateProvider: NewGameStateProvider,
     private val commandProcessorProvider: ICommandProcessorProvider
 ) : IGameFactory {
@@ -36,12 +36,12 @@ class NewGameFactory(
     }
 }
 
-interface IGameStateProvider {
+internal interface IGameStateProvider {
 
     fun provideGameState(): GameState
 }
 
-class NewGameStateProvider(
+internal class NewGameStateProvider(
     private val players: List<Player>,
     private val mapProvider: IMapProvider,
     private val playerStateProvider: IPlayerStatesProvider,
@@ -77,10 +77,10 @@ class NewGameStateProvider(
     }
 }
 
-interface ICommandProcessorProvider :
+internal interface ICommandProcessorProvider :
     IProvider<ICommandProcessor>
 
-class CommandProcessorProvider : ICommandProcessorProvider {
+internal class CommandProcessorProvider : ICommandProcessorProvider {
 
     override fun provide(): ICommandProcessor {
         val typedBatchCommandProcessor = TypedBatchCommandProcessor(
@@ -94,19 +94,19 @@ class CommandProcessorProvider : ICommandProcessorProvider {
     }
 }
 
-interface IPlayerStatesProvider : IProvider<PlayerStates>
+internal interface IPlayerStatesProvider : IProvider<PlayerStates>
 
-interface IMapProvider : IProvider<Map>
+internal interface IMapProvider : IProvider<Map>
 
 
-class MapProvider: IMapProvider {
+internal class MapProvider : IMapProvider {
 
     override fun provide(): Map {
         return Map(CityGraph(listOf(), listOf()))
     }
 }
 
-class NewGamePlayerStateProvider(private val numberOfPlayers: Int) : IPlayerStatesProvider {
+internal class NewGamePlayerStateProvider(private val numberOfPlayers: Int) : IPlayerStatesProvider {
 
     override fun provide(): PlayerStates {
         return PlayerStates(
@@ -122,12 +122,12 @@ class NewGamePlayerStateProvider(private val numberOfPlayers: Int) : IPlayerStat
     }
 }
 
-interface IProvider<T> {
+internal interface IProvider<T> {
 
     fun provide(): T
 }
 
-class NewGameDestinationTicketCardProvider :
+internal class NewGameDestinationTicketCardProvider :
     IProvider<CardStack<DestinationTickerCard>> {
 
     override fun provide(): CardStack<DestinationTickerCard> {
@@ -138,7 +138,7 @@ class NewGameDestinationTicketCardProvider :
     }
 }
 
-class NewGameTrainCardStoreProvider(
+internal class NewGameTrainCardStoreProvider(
     private val gameConstants: IGameConstants
 ) : IProvider<TrainCarCardStore> {
 

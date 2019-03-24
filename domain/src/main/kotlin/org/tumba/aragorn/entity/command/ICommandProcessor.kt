@@ -3,12 +3,12 @@ package org.tumba.aragorn.entity.command
 import org.tumba.aragorn.entity.IGameManager
 
 
-interface ICommandProcessor {
+internal interface ICommandProcessor {
 
     fun process(gameManager: IGameManager, command: ICommand)
 }
 
-class TypedBatchCommandProcessor(
+internal class TypedBatchCommandProcessor(
     private val processors: List<TypedCommandProcessor<*>>
 ) : ICommandProcessor {
 
@@ -20,7 +20,7 @@ class TypedBatchCommandProcessor(
     }
 }
 
-abstract class TypedCommandProcessor<T>(val clazz: Class<T>) : ICommandProcessor {
+internal abstract class TypedCommandProcessor<T>(val clazz: Class<T>) : ICommandProcessor {
 
     @Suppress("UNCHECKED_CAST")
     override fun process(gameManager: IGameManager, command: ICommand) {
@@ -32,7 +32,7 @@ abstract class TypedCommandProcessor<T>(val clazz: Class<T>) : ICommandProcessor
     abstract fun process(gameManager: IGameManager, command: T)
 }
 
-class BatchCommandProcessor(
+internal class BatchCommandProcessor(
     private val processors: List<ICommandProcessor>
 ) : ICommandProcessor {
 

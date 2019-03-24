@@ -4,12 +4,12 @@ import org.tumba.aragorn.entity.command.ICommand
 import org.tumba.aragorn.entity.command.ICommandProcessor
 
 
-interface IGame {
+internal interface IGame {
 
     fun execute(command: ICommand)
 }
 
-class Game(
+internal class Game(
     private val state: IGameState,
     private val commandProcessor: ICommandProcessor
 ): IGame {
@@ -22,23 +22,6 @@ class Game(
             command = command
         )
     }
-
-    /*fun chooseTurnType(playerId: Int, type: TurnType) {
-        val player = getPlayerById(playerId)
-        ensureState(equalTo(IntermediateGameState.ChoosingTurnType(player)))
-
-        when (type) {
-            TurnType.PLACE_TRAIN_CARS -> {
-                state.intermediateGameState = IntermediateGameState.PlacingTrainCars(player)
-            }
-            TurnType.GET_DESTINATION_TICKETS -> {
-                state.intermediateGameState = IntermediateGameState.PickingDestinationTicketCard(player, listOf())
-            }
-            TurnType.GET_TRAIN_CAR_CARDS -> {
-                state.intermediateGameState = IntermediateGameState.PickingTrainCarCard(player, 0)
-            }
-        }
-    }*/
 }
 
 internal class GameManager(override val state: IGameState) :
@@ -73,7 +56,7 @@ internal class GameManager(override val state: IGameState) :
     }
 }
 
-interface IGameManager {
+internal interface IGameManager {
 
     val state: IGameState
 
@@ -88,7 +71,7 @@ interface IGameManager {
     fun equalTo(stateIntermediate: IntermediateGameState): (IntermediateGameState) -> Boolean
 }
 
-interface IGameState {
+internal interface IGameState {
     val players: List<Player>
     val map: Map
     val trainCarPlacements: MutableList<TrainCarPlacement>
@@ -97,7 +80,7 @@ interface IGameState {
     var cardsHolder: CardsHolder
 }
 
-class GameState(
+internal class GameState(
     override val players: List<Player>,
     override val map: Map,
     override val trainCarPlacements: MutableList<TrainCarPlacement>,
@@ -106,19 +89,19 @@ class GameState(
     override var cardsHolder: CardsHolder
 ) : IGameState
 
-class CardsHolder(
+internal class CardsHolder(
     val trainCarCardStore: TrainCarCardStore,
     val destinationTicketCardsStack: CardStack<DestinationTickerCard>
 )
 
-class PlayerState(
+internal class PlayerState(
     var numberOfTrainCars: Int,
     var destinationTicketCards: MutableList<DestinationTickerCard>,
     var trainCarCards: MutableList<TrainCarCard>,
     var points: Int
 )
 
-class PlayerStates(private val states: List<PlayerState>) {
+internal class PlayerStates(private val states: List<PlayerState>) {
 
     fun getStateOf(player: Player): PlayerState {
         return states.getOrNull(player.id) ?: throw IllegalArgumentException("Illegal player $player")
@@ -141,9 +124,9 @@ class PlayerStates(private val states: List<PlayerState>) {
     }
 }
 
-class TrainCarPlacement(val road: Road, val trainCar: TrainCar)
+internal class TrainCarPlacement(val road: Road, val trainCar: TrainCar)
 
-sealed class IntermediateGameState {
+internal sealed class IntermediateGameState {
 
     object Starting : IntermediateGameState()
 

@@ -29,9 +29,9 @@ fun fail(message: String): Nothing {
     throw AssertionError(message)
 }
 
-fun anyCity() = City(0, "")
+internal fun anyCity() = City(0, "")
 
-fun IntermediateGameState.Companion.values(): List<IntermediateGameState> {
+internal fun IntermediateGameState.Companion.values(): List<IntermediateGameState> {
     return listOf(
         Starting,
         InitialPickingDestinationTicketCard,
@@ -42,7 +42,7 @@ fun IntermediateGameState.Companion.values(): List<IntermediateGameState> {
     )
 }
 
-inline fun <reified T : IntermediateGameState> IntermediateGameState.Companion.valuesExclude()
+internal inline fun <reified T : IntermediateGameState> IntermediateGameState.Companion.valuesExclude()
     : List<IntermediateGameState> {
     return values().filter { it::class == T::class }
 }

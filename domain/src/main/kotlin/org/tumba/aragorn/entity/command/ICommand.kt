@@ -1,15 +1,15 @@
 package org.tumba.aragorn.entity.command
 
-interface ICommand
+internal interface ICommand
 
-class PlaceTrainCarsCommand(
+internal class PlaceTrainCarsCommand(
     val playerId: Int,
     val roadId: Int,
     val wagonCardIds: List<Int>
 ) : ICommand
 
 
-class ChooseTurnTypeCommand(
+internal class ChooseTurnTypeCommand(
     val playerId: Int,
     val turnType: TurnType
 ) : ICommand {

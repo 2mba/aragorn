@@ -14,7 +14,7 @@ import org.tumba.aragorn.entity.Road
  */
 
 @Suppress("MemberVisibilityCanBePrivate")
-object TestThreeCityMap {
+internal object TestThreeCityMap {
     val cityMoscow = City(0, "Moscow")
     val citySpb = City(1, "Spb")
     val cityNsk = City(2, "Nsk")

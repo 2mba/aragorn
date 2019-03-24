@@ -3,9 +3,9 @@ package org.tumba.aragorn.entity
 import kotlin.math.min
 
 
-class TrainCar(val playerId: Int)
+internal class TrainCar(val playerId: Int)
 
-class City(
+internal class City(
     val id: Int,
     val name: String
 ) {
@@ -32,7 +32,7 @@ class City(
 
 }
 
-interface ICityGraph {
+internal interface ICityGraph {
 
     val cities: List<City>
 
@@ -47,7 +47,7 @@ interface ICityGraph {
 
 }
 
-class Road(
+internal class Road(
     val id: Int,
     val start: City,
     val end: City,
@@ -87,7 +87,7 @@ class Road(
     }
 }
 
-class RoadBuilder(var id: Int = 0) {
+internal class RoadBuilder(var id: Int = 0) {
 
     fun road(
         start: City,
@@ -107,11 +107,11 @@ class RoadBuilder(var id: Int = 0) {
     }
 }
 
-fun roadBuilder(startId: Int = 0, block: RoadBuilder.() -> Unit) {
+internal fun roadBuilder(startId: Int = 0, block: RoadBuilder.() -> Unit) {
     block.invoke(RoadBuilder(id = startId))
 }
 
-class CityGraph(
+internal class CityGraph(
     override val cities: List<City>,
     override val roads: List<Road>
 ) : ICityGraph {
@@ -141,6 +141,6 @@ class CityGraph(
     }
 }
 
-class Map(
+internal class Map(
     val cityGraph: ICityGraph
 )

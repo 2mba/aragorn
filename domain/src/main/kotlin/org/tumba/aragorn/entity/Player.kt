@@ -1,6 +1,6 @@
 package org.tumba.aragorn.entity
 
-class Player(
+internal class Player(
     val id: Int,
     val name: String,
     val color: Color

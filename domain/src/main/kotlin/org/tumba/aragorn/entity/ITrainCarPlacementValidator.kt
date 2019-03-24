@@ -1,11 +1,11 @@
 package org.tumba.aragorn.entity
 
-interface ITrainCarPlacementValidator {
+internal interface ITrainCarPlacementValidator {
 
     fun canRoadBePlacedByTrainCarCards(road: Road, trainCars: List<TrainCarCard>): Boolean
 }
 
-class TrainCarPlacementValidator : ITrainCarPlacementValidator {
+internal class TrainCarPlacementValidator : ITrainCarPlacementValidator {
 
     override fun canRoadBePlacedByTrainCarCards(road: Road, trainCars: List<TrainCarCard>): Boolean {
         if (trainCars.size != road.length) return false

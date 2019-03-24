@@ -2,7 +2,7 @@ package org.tumba.aragorn.entity
 
 import java.util.*
 
-class CardStack<T : ICard>(
+internal class CardStack<T : ICard>(
     cards: List<T>,
     droppedCards: List<T>,
     private val random: Random = Random()
@@ -34,7 +34,7 @@ class CardStack<T : ICard>(
     }
 }
 
-class TrainCarCardStore(
+internal class TrainCarCardStore(
     cards: List<TrainCarCard>,
     val maxStoreSize: Int,
     private val stack: CardStack<TrainCarCard>

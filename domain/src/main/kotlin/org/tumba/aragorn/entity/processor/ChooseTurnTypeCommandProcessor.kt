@@ -6,7 +6,7 @@ import org.tumba.aragorn.entity.command.ChooseTurnTypeCommand
 import org.tumba.aragorn.entity.command.ChooseTurnTypeCommand.TurnType.*
 import org.tumba.aragorn.entity.command.TypedCommandProcessor
 
-class ChooseTurnTypeCommandProcessor :
+internal class ChooseTurnTypeCommandProcessor :
     TypedCommandProcessor<ChooseTurnTypeCommand>(ChooseTurnTypeCommand::class.java) {
 
     override fun process(gameManager: IGameManager, command: ChooseTurnTypeCommand) {

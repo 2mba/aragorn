@@ -1,15 +1,15 @@
 package org.tumba.aragorn.entity
 
-abstract class GameException(message: String = "") : RuntimeException(message)
+internal abstract class GameException(message: String = "") : RuntimeException(message)
 
-class OutOfTurnException : GameException()
+internal class OutOfTurnException : GameException()
 
-class OutOfStateException : GameException()
+internal class OutOfStateException : GameException()
 
-abstract class TrainCarCannotBePlacedException(message: String = ""): GameException(message)
+internal abstract class TrainCarCannotBePlacedException(message: String = "") : GameException(message)
 
-class TrainCarCardNotOwnedByUserException(message: String = "") : TrainCarCannotBePlacedException(message)
+internal class TrainCarCardNotOwnedByUserException(message: String = "") : TrainCarCannotBePlacedException(message)
 
-class IllegalTrainCarTypeException(message: String = "") : TrainCarCannotBePlacedException(message)
+internal class IllegalTrainCarTypeException(message: String = "") : TrainCarCannotBePlacedException(message)
 
-class NotEnoughTrainCarsException(message: String = "") : TrainCarCannotBePlacedException(message)
+internal class NotEnoughTrainCarsException(message: String = "") : TrainCarCannotBePlacedException(message)
