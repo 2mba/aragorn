@@ -3,6 +3,8 @@ package org.tumba.aragorn.entity
 import org.amshove.kluent.`should be`
 import org.junit.Test
 import org.tumba.aragorn.anyCity
+import org.tumba.aragorn.core.Road
+import org.tumba.aragorn.core.TrainCarCard
 
 class TrainCarPlacementValidatorTest {
 

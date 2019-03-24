@@ -1,11 +1,11 @@
-package org.tumba.aragorn.entity
+package org.tumba.aragorn.core
 
 import kotlin.math.min
 
 
-internal class TrainCar(val playerId: Int)
+class TrainCar(val playerId: Int)
 
-internal class City(
+class City(
     val id: Int,
     val name: String
 ) {
@@ -32,7 +32,7 @@ internal class City(
 
 }
 
-internal interface ICityGraph {
+interface ICityGraph {
 
     val cities: List<City>
 
@@ -47,7 +47,7 @@ internal interface ICityGraph {
 
 }
 
-internal class Road(
+class Road(
     val id: Int,
     val start: City,
     val end: City,
@@ -141,6 +141,6 @@ internal class CityGraph(
     }
 }
 
-internal class Map(
+class Map(
     val cityGraph: ICityGraph
 )

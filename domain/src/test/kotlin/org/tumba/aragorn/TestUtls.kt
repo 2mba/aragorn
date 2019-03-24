@@ -1,9 +1,9 @@
 package org.tumba.aragorn
 
-import org.tumba.aragorn.entity.City
+import org.tumba.aragorn.core.City
 import org.tumba.aragorn.entity.IntermediateGameState
 import org.tumba.aragorn.entity.IntermediateGameState.*
-import org.tumba.aragorn.entity.Player
+import org.tumba.aragorn.core.Player
 
 infix fun <T> Iterable<T>.`should contains same`(iterable: Iterable<T>) {
     if (!iterable.all { this.contains(it) }) fail("Difference lists: ${this.joinToString()} and ${iterable.joinToString()}")

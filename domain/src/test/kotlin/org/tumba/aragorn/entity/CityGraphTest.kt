@@ -4,6 +4,10 @@ import org.amshove.kluent.`should equal`
 import org.junit.Test
 import org.tumba.aragorn.`should contains same`
 import org.tumba.aragorn.assertThrown
+import org.tumba.aragorn.core.City
+import org.tumba.aragorn.core.CityGraph
+import org.tumba.aragorn.core.Road
+import org.tumba.aragorn.core.RoadBuilder
 
 class CityGraphTest {
 

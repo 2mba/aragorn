@@ -5,6 +5,8 @@ import org.amshove.kluent.`should equal`
 import org.junit.Test
 
 import org.tumba.aragorn.TestThreeCityMap
+import org.tumba.aragorn.core.Player
+import org.tumba.aragorn.core.TrainCarCard
 import org.tumba.aragorn.entity.*
 import org.tumba.aragorn.entity.IntermediateGameState.*
 import org.tumba.aragorn.entity.command.ChooseTurnTypeCommand

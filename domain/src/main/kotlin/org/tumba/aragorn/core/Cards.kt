@@ -1,6 +1,6 @@
-package org.tumba.aragorn.entity
+package org.tumba.aragorn.core
 
-internal class DestinationTickerCard(
+class DestinationTickerCard(
     val id: Int,
     val from: City,
     val to: City
@@ -21,7 +21,7 @@ internal class DestinationTickerCard(
     }
 }
 
-internal class TrainCarCard(
+class TrainCarCard(
     val id: Int,
     val kind: Kind
 ) : ICard {
@@ -38,5 +38,4 @@ internal class TrainCarCard(
     }
 }
 
-internal interface ICard
-
+interface ICard

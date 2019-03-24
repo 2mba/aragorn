@@ -1,5 +1,9 @@
 package org.tumba.aragorn.entity.processor
 
+import org.tumba.aragorn.core.Player
+import org.tumba.aragorn.core.Road
+import org.tumba.aragorn.core.TrainCar
+import org.tumba.aragorn.core.TrainCarCard
 import org.tumba.aragorn.entity.*
 import org.tumba.aragorn.entity.command.PlaceTrainCarsCommand
 import org.tumba.aragorn.entity.command.TypedCommandProcessor

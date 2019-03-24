@@ -3,6 +3,8 @@ package org.tumba.aragorn.entity.processor
 import io.mockk.mockk
 import org.junit.Test
 import org.tumba.aragorn.TestThreeCityMap
+import org.tumba.aragorn.core.Player
+import org.tumba.aragorn.core.TrainCarCard
 import org.tumba.aragorn.entity.*
 import org.tumba.aragorn.entity.command.PlaceTrainCarsCommand
 

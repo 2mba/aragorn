@@ -1,5 +1,8 @@
 package org.tumba.aragorn.entity
 
+import org.tumba.aragorn.core.Road
+import org.tumba.aragorn.core.TrainCarCard
+
 internal interface ITrainCarPlacementValidator {
 
     fun canRoadBePlacedByTrainCarCards(road: Road, trainCars: List<TrainCarCard>): Boolean

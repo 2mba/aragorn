@@ -3,6 +3,7 @@ package org.tumba.aragorn.entity
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 import org.tumba.aragorn.`should contains same`
+import org.tumba.aragorn.core.TrainCarCard
 
 class TrainCarCardStoreTest {
 

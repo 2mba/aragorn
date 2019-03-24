@@ -1,5 +1,7 @@
 package org.tumba.aragorn.entity
 
+import org.tumba.aragorn.core.ICard
+import org.tumba.aragorn.core.TrainCarCard
 import java.util.*
 
 internal class CardStack<T : ICard>(

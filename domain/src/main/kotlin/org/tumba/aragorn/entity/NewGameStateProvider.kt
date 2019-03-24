@@ -1,5 +1,7 @@
 package org.tumba.aragorn.entity
 
+import org.tumba.aragorn.core.*
+import org.tumba.aragorn.core.Map
 import org.tumba.aragorn.entity.command.BatchCommandProcessor
 import org.tumba.aragorn.entity.command.ICommandProcessor
 import org.tumba.aragorn.entity.command.TypedBatchCommandProcessor
@@ -27,9 +29,9 @@ internal class NewGameFactory(
 
     companion object {
 
-        fun create(): NewGameFactory {
+        fun create(players: List<Player>): NewGameFactory {
             return NewGameFactory(
-                newGameStateProvider = NewGameStateProvider.create(listOf()),
+                newGameStateProvider = NewGameStateProvider.create(players),
                 commandProcessorProvider = CommandProcessorProvider()
             )
         }

@@ -3,6 +3,9 @@ package org.tumba.aragorn.entity
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
+import org.tumba.aragorn.core.CityGraph
+import org.tumba.aragorn.core.Map
+import org.tumba.aragorn.core.Player
 import org.tumba.aragorn.entity.command.ICommand
 import org.tumba.aragorn.entity.command.ICommandProcessor
 

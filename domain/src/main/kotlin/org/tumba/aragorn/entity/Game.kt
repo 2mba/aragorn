@@ -1,5 +1,7 @@
 package org.tumba.aragorn.entity
 
+import org.tumba.aragorn.core.*
+import org.tumba.aragorn.core.Map
 import org.tumba.aragorn.entity.command.ICommand
 import org.tumba.aragorn.entity.command.ICommandProcessor
 

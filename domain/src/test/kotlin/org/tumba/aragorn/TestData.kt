@@ -1,9 +1,9 @@
 package org.tumba.aragorn
 
-import org.tumba.aragorn.entity.City
-import org.tumba.aragorn.entity.CityGraph
-import org.tumba.aragorn.entity.Map
-import org.tumba.aragorn.entity.Road
+import org.tumba.aragorn.core.City
+import org.tumba.aragorn.core.CityGraph
+import org.tumba.aragorn.core.Map
+import org.tumba.aragorn.core.Road
 
 /**
  * Moscow(0) ---Red(0)-- - Spb(1)
