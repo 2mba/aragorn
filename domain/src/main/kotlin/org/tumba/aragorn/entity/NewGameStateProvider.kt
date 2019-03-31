@@ -8,6 +8,7 @@ import org.tumba.aragorn.entity.command.TypedBatchCommandProcessor
 import org.tumba.aragorn.entity.processor.PlaceTrainCarsCommandProcessor
 import org.tumba.aragorn.entity.values.IGameConstants
 import org.tumba.aragorn.entity.values.TicketToRide
+import java.util.*
 
 
 internal interface IGameFactory {
@@ -16,6 +17,7 @@ internal interface IGameFactory {
 }
 
 internal class NewGameFactory(
+    private val random: Random,
     private val newGameStateProvider: NewGameStateProvider,
     private val commandProcessorProvider: ICommandProcessorProvider
 ) : IGameFactory {
@@ -29,10 +31,14 @@ internal class NewGameFactory(
 
     companion object {
 
-        fun create(players: List<Player>): NewGameFactory {
+        fun create(
+            players: List<Player>,
+            random: Random
+        ): NewGameFactory {
             return NewGameFactory(
-                newGameStateProvider = NewGameStateProvider.create(players),
-                commandProcessorProvider = CommandProcessorProvider()
+                newGameStateProvider = NewGameStateProvider.create(players, random),
+                commandProcessorProvider = CommandProcessorProvider(),
+                random = random
             )
         }
     }
@@ -67,12 +73,15 @@ internal class NewGameStateProvider(
 
     companion object {
 
-        fun create(players: List<Player>): NewGameStateProvider {
+        fun create(
+            players: List<Player>,
+            random: Random
+        ): NewGameStateProvider {
             return NewGameStateProvider(
                 players = players,
                 mapProvider = MapProvider(),
                 playerStateProvider = NewGamePlayerStateProvider(players.size),
-                trainCardsStoreProvider = NewGameTrainCardStoreProvider(TicketToRide),
+                trainCardsStoreProvider = NewGameTrainCardStoreProvider(TicketToRide, random),
                 destinationTicketCardsStackProvider = NewGameDestinationTicketCardProvider()
             )
         }
@@ -141,12 +150,13 @@ internal class NewGameDestinationTicketCardProvider :
 }
 
 internal class NewGameTrainCardStoreProvider(
-    private val gameConstants: IGameConstants
+    private val gameConstants: IGameConstants,
+    private val random: Random
 ) : IProvider<TrainCarCardStore> {
 
     override fun provide(): TrainCarCardStore {
-        val cardStack = CardStack<TrainCarCard>(
-            cards = listOf(),
+        val cardStack = CardStack(
+            cards = createCardsForStore(),
             droppedCards = emptyList()
         )
         val cards = listOf<TrainCarCard>()
@@ -155,5 +165,9 @@ internal class NewGameTrainCardStoreProvider(
             maxStoreSize = gameConstants.trainCarCardStoreMaxSize,
             stack = cardStack
         )
+    }
+
+    private fun createCardsForStore(): List<TrainCarCard> {
+        return gameConstants.trainCarCards.shuffled(random)
     }
 }

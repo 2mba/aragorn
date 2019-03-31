@@ -4,6 +4,7 @@ import org.tumba.aragorn.core.Player
 import org.tumba.aragorn.entity.GameHolder
 import org.tumba.aragorn.entity.NewGameFactory
 import org.tumba.aragorn.usecase.IUsecase
+import java.util.*
 
 interface ICreateGameUsecase : IUsecase<ICreateGameUsecase.Param, Unit> {
 
@@ -21,7 +22,8 @@ internal class CreateGameUsecase(
             throw IllegalStateException("Game is already exist. Stop game before start new game.")
         }
         val factory = NewGameFactory.create(
-            players = param.players
+            players = param.players,
+            random = Random()
         )
         val game = factory.create()
         gameHolder.game = game
