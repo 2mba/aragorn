@@ -5,6 +5,8 @@ import org.koin.dsl.module
 import org.tumba.aragorn.entity.GameHolder
 import org.tumba.aragorn.usecase.common.CreateGameUsecase
 import org.tumba.aragorn.usecase.common.ICreateGameUsecase
+import org.tumba.aragorn.usecase.common.IPlaceTrainCarsUsecase
+import org.tumba.aragorn.usecase.common.PlaceTrainCarsUsecase
 
 
 class DomainModulesProvider {
@@ -25,4 +27,6 @@ private fun createDomainModule(): Module = module {
 private fun createUsecaseModule(): Module = module {
 
     factory<ICreateGameUsecase> { CreateGameUsecase(get()) }
+
+    factory<IPlaceTrainCarsUsecase> { PlaceTrainCarsUsecase(get()) }
 }

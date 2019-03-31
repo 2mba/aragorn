@@ -15,7 +15,7 @@ internal class TypedBatchCommandProcessor(
     override fun process(gameManager: IGameManager, command: ICommand) {
         processors
             .asSequence()
-            .filter { it.clazz == command }
+            .filter { it.clazz == command::class.java }
             .forEach { it.process(gameManager, command) }
     }
 }
