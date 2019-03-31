@@ -5,10 +5,18 @@ import org.tumba.aragorn.entity.GameHolder
 import org.tumba.aragorn.entity.NewGameFactory
 import org.tumba.aragorn.usecase.IUsecase
 
-interface ICreateGameUsecase: IUsecase<ICreateGameUsecase.Param, Unit>{
+interface ICreateGameUsecase : IUsecase<ICreateGameUsecase.Param, Unit> {
 
-    override fun execute(param: Param) {
-        val gameHolder = GameHolder.get()
+    data class Param(
+        val players: List<Player>
+    )
+}
+
+internal class CreateGameUsecase(
+    private val gameHolder: GameHolder
+) : ICreateGameUsecase {
+
+    override fun execute(param: ICreateGameUsecase.Param) {
         if (gameHolder.game != null) {
             throw IllegalStateException("Game is already exist. Stop game before start new game.")
         }
@@ -18,9 +26,4 @@ interface ICreateGameUsecase: IUsecase<ICreateGameUsecase.Param, Unit>{
         val game = factory.create()
         gameHolder.game = game
     }
-
-
-    data class Param(
-        val players: List<Player>
-    )
 }

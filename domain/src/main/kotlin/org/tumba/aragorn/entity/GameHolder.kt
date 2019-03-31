@@ -1,13 +1,6 @@
 package org.tumba.aragorn.entity
 
-internal class GameHolder private constructor(){
+internal class GameHolder {
 
     var game: Game? = null
-
-    companion object {
-
-        private val instance: GameHolder by lazy { GameHolder() }
-
-        fun get(): GameHolder = instance
-    }
 }

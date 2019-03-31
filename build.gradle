@@ -14,8 +14,22 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
 
-repositories {
-    mavenCentral()
+buildscript {
+    ext.kotlin_version = '1.3.11'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 }
 
 dependencies {
@@ -27,4 +41,13 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+buildscript {
+    ext.libraries = [
+            junit : "junit:junit:4.12",
+            kluent: "org.amshove.kluent:kluent:1.15",
+            mockk : "io.mockk:mockk:1.8.13.kotlin13",
+            koin  : "org.koin:koin-core:2.0.0-rc-2",
+    ]
 }
