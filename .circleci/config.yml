@@ -39,10 +39,10 @@ workflows:
   deploy:
     jobs:
       - lint:
-        type: approval
+          type: approval
       - test:
-        requires:
-          - lint
+          requires:
+            - lint
       - build:
-        requires:
-          - test
+          requires:
+            - test
