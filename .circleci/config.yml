@@ -29,11 +29,12 @@ jobs:
 
 workflows:
   version: 2
-  jobs:
-    - test:
-        requires:
-          - lint
-    - build:
-        type: approval
-        requires:
-          - test
+  main:
+    jobs:
+      - test:
+          requires:
+            - lint
+      - build:
+          type: approval
+          requires:
+            - test
