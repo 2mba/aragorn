@@ -14,6 +14,7 @@ jobs:
     steps:
       - checkout
       - run: ./gradlew test
+      - run: ls domain/build/test-results/test
     store_test_results:
       path: domain/build/test-results
   build:
