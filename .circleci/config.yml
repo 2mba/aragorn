@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run: ./gradlew test
     store_test_results:
-      test-results: build/test-results/test
+      test-results: build/test-results
   build:
     docker:
       - image: circleci/openjdk:8-jdk-browsers
@@ -36,7 +36,13 @@ workflows:
       - test:
           requires:
             - lint
+  deploy:
+    jobs:
+      - lint:
+        type: approval
+      - test:
+        requires:
+          - lint
       - build:
-          type: approval
-          requires:
-            - test
+        requires:
+          - test
