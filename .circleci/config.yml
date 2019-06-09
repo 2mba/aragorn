@@ -30,10 +30,10 @@ jobs:
 workflows:
   version: 2
   jobs:
-    test:
-      requres:
-        - lint
-    build:
-      type: approval
-      requires:
-        - test
+    - test:
+        requres:
+          - lint
+    - build:
+        type: approval
+        requires:
+          - test
