@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk-browsers
     steps:
-      - ls
+      - run: ls -l
       - run: ./gradlew test
     store_test_results:
       test-results: build/test-results/test
